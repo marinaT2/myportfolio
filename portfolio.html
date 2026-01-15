@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marina Traore - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rose-pastel: #E8B4B8;
+            --beige: #F5E6D3;
+            --marron: #8B6F47;
+            --marron-fonce: #6B5535;
+            --blanc: #FEFEFE;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--beige) 0%, #FFF5E6 100%);
+            color: var(--marron-fonce);
+            line-height: 1.6;
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--blanc);
+            border: 2px solid var(--rose-pastel);
+            border-radius: 25px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--marron);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .language-toggle:hover {
+            background: var(--rose-pastel);
+            color: var(--blanc);
+            transform: translateY(-2px);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--rose-pastel) 0%, #D4A5A5 100%);
+            color: var(--blanc);
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 400;
+            font-style: italic;
+            opacity: 0.95;
+        }
+
+        .contact-info {
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+
+        .contact-info a {
+            color: var(--blanc);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: opacity 0.3s;
+        }
+
+        .contact-info a:hover {
+            opacity: 0.8;
+        }
+
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 12px 24px;
+            border-radius: 25px;
+            color: var(--blanc);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1.05em;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .social-links a:hover {
+            background: var(--blanc);
+            color: var(--rose-pastel);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-color: var(--blanc);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: var(--blanc);
+            margin-bottom: 30px;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--rose-pastel);
+        }
+
+        h2 {
+            color: var(--marron);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: 400;
+            border-bottom: 2px solid var(--beige);
+            padding-bottom: 10px;
+        }
+
+        .summary {
+            font-size: 1.05em;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .experience-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--beige);
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--rose-pastel) 0%, var(--marron) 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -42px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--rose-pastel);
+            border: 3px solid var(--blanc);
+            box-shadow: 0 0 0 3px var(--rose-pastel);
+            z-index: 1;
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: -42px;
+            top: 30px;
+            font-weight: 700;
+            color: var(--marron);
+            font-size: 0.9em;
+            background: var(--blanc);
+            padding: 2px 0;
+        }
+
+        .timeline-content {
+            background: var(--beige);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid var(--rose-pastel);
+            transition: all 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .timeline-content:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left-color: var(--marron);
+        }
+
+        .timeline-content h3 {
+            color: var(--marron);
+            font-size: 1.15em;
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .experience-item h3 {
+            color: var(--marron);
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+
+        .meta {
+            color: var(--marron);
+            font-style: italic;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: var(--beige);
+            color: var(--marron);
+            padding: 10px 15px;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .skill-tag:hover {
+            background: var(--rose-pastel);
+            color: var(--blanc);
+            transform: translateY(-3px);
+            border-color: var(--marron);
+        }
+
+        .education-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--beige);
+            border-radius: 8px;
+        }
+
+        .education-item h3 {
+            color: var(--marron);
+            margin-bottom: 5px;
+        }
+
+        .education-note {
+            margin-top: 10px;
+            font-style: italic;
+            color: var(--marron);
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .academic-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--rose-pastel), #D4A5A5);
+            padding: 25px 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--blanc);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.95em;
+            color: var(--blanc);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .semester-block {
+            margin-bottom: 35px;
+        }
+
+        .theme-category {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(232, 180, 184, 0.1), rgba(245, 230, 211, 0.2));
+            border-radius: 12px;
+            border-left: 4px solid var(--rose-pastel);
+            transition: all 0.3s ease;
+        }
+
+        .theme-category:hover {
+            border-left-width: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .theme-title {
+            color: var(--marron);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .semester-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--rose-pastel);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .semester-header h3 {
+            color: var(--marron);
+            font-size: 1.4em;
+            margin: 0;
+        }
+
+        .semester-gpa {
+            background: var(--marron);
+            color: var(--blanc);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .course-card {
+            background: var(--blanc);
+            padding: 18px;
+            border-radius: 10px;
+            border-left: 3px solid var(--rose-pastel);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .course-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left-color: var(--marron);
+        }
+
+        .course-card.transfer {
+            border-left-color: var(--marron);
+            background: #FFF9F0;
+        }
+
+        .course-code {
+            font-weight: 700;
+            color: var(--marron);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .course-name {
+            color: var(--marron-fonce);
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-size: 0.95em;
+        }
+
+        .course-credits {
+            color: var(--marron);
+            font-size: 0.85em;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .interests {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .interest-item {
+            background: var(--rose-pastel);
+            color: var(--blanc);
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .interest-item:hover {
+            background: var(--marron);
+            transform: scale(1.05);
+        }
+
+        .interests {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .interest-item {
+            background: var(--rose-pastel);
+            color: var(--blanc);
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .interest-item:hover {
+            background: var(--marron);
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--marron);
+            font-size: 0.9em;
+        }
+
+        .lang-fr, .lang-en {
+            display: none;
+        }
+
+        .lang-fr.active, .lang-en.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .semester-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 40px;
+            }
+
+            .timeline-content {
+                margin-left: 10px;
+            }
+
+            section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="language-toggle" onclick="toggleLanguage()">
+        <span class="lang-fr active">EN</span>
+        <span class="lang-en">FR</span>
+    </button>
+
+    <header>
+        <h1>Marina TRAORE</h1>
+        <p class="subtitle lang-fr active">À la recherche d'un stage pour l'été et/ou automne 2026</p>
+        <p class="subtitle lang-en">Looking for a Summer and/or Fall 2026 Internship</p>
+        <div class="contact-info">
+            <a href="mailto:mariam.marina.traore@umontreal.ca">✉ mariam.marina.traore@umontreal.ca</a>
+            <span>📱 438-304-7785</span>
+        </div>
+        <div class="social-links">
+            <a href="https://github.com/marinaT2" target="_blank" rel="noopener noreferrer">
+                🔗 GitHub
+            </a>
+            <a href="https://linkedin.com/in/mmarina-traoree" target="_blank" rel="noopener noreferrer">
+                🔗 LinkedIn
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Summary Section -->
+        <section>
+            <h2 class="lang-fr active">Synthèse Professionnelle</h2>
+            <h2 class="lang-en">Professional Summary</h2>
+            <p class="summary lang-fr active">
+                Étudiante en informatique à l'Université de Montréal, je suis à la recherche d'un stage dans mon domaine d'études afin d'acquérir une expérience professionnelle enrichissante. Je porte un intérêt particulier à la programmation orientée objet, au développement logiciel et à la conception de bases de données, notamment avec SQL. En tant que stagiaire au sein de votre entreprise, je souhaite mettre en pratique et approfondir les compétences acquises au cours de ma formation.
+            </p>
+            <p class="summary lang-en">
+                Computer Science student at Université de Montréal, seeking an internship to gain valuable professional experience. I have a strong interest in object-oriented programming, software development, and database design, particularly with SQL. As an intern, I aim to apply and deepen the skills acquired during my studies.
+            </p>
+        </section>
+
+        <!-- Experience Section -->
+        <section>
+            <h2 class="lang-fr active">Expérience Professionnelle</h2>
+            <h2 class="lang-en">Professional Experience</h2>
+            
+            <div class="experience-item">
+                <h3 class="lang-fr active">Agent de Centre d'appel</h3>
+                <h3 class="lang-en">Call Center Agent</h3>
+                <p class="meta lang-fr active">RTL centre d'appel | Mai 2023 - Actuel | Montréal, CA</p>
+                <p class="meta lang-en">RTL Call Center | May 2023 - Present | Montréal, CA</p>
+                <ul class="lang-fr active">
+                    <li>Gestion des appels entrants et traitement des demandes clients</li>
+                    <li>Utilisation d'outils et technologies pour le traitement des demandes</li>
+                    <li>Développement de compétences en communication</li>
+                </ul>
+                <ul class="lang-en">
+                    <li>Managing incoming calls and processing customer requests</li>
+                    <li>Using tools and technologies for request processing</li>
+                    <li>Developing communication skills</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h3 class="lang-fr active">Micro Stage Test Logiciel</h3>
+                <h3 class="lang-en">Software Testing Micro-Internship</h3>
+                <p class="meta lang-fr active">Canadian Mobility And Aerospace Institute | Nov. 2025 | St Laurent</p>
+                <p class="meta lang-en">Canadian Mobility And Aerospace Institute | Nov. 2025 | St Laurent</p>
+                <ul class="lang-fr active">
+                    <li>Présentation des simulateurs de vol utilisés en environnement aéronautique</li>
+                    <li>Vue d'ensemble des pratiques de tests logiciels et des codes de test</li>
+                    <li>Utilisation d'outils d'analyse statique de code (Cppcheck)</li>
+                </ul>
+                <ul class="lang-en">
+                    <li>Presentation of flight simulators used in aeronautical environment</li>
+                    <li>Overview of software testing practices and test codes</li>
+                    <li>Using static code analysis tools (Cppcheck)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section>
+            <h2 class="lang-fr active">Formation</h2>
+            <h2 class="lang-en">Education</h2>
+
+            <div class="education-item">
+                <h3 class="lang-fr active">Bachelor en Informatique</h3>
+                <h3 class="lang-en">Bachelor in Computer Science</h3>
+                <p class="lang-fr active">Université De Montréal</p>
+                <p class="lang-en">Université De Montréal</p>
+                <p class="education-note lang-fr active">📅 Inscrite à temps plein pour la session Automne 2025</p>
+                <p class="education-note lang-en">📅 Enrolled full-time for Fall 2025 session</p>
+            </div>
+
+            <div class="education-item">
+                <h3 class="lang-fr active">Certificat Science Foundation - Informatique</h3>
+                <h3 class="lang-en">Certificate Science Foundation - Computer Science</h3>
+                <p>Concordia University</p>
+            </div>
+
+            <div class="education-item">
+                <h3>BAC IB</h3>
+                <p>Organisation</p>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section>
+            <h2 class="lang-fr active">Cours Suivis</h2>
+            <h2 class="lang-en">Courses Completed</h2>
+
+            <div class="theme-category">
+                <h3 class="theme-title lang-fr active">💻 Programmation & Développement</h3>
+                <h3 class="theme-title lang-en">💻 Programming & Development</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-code">IFT 1015</div>
+                        <div class="course-name">Programmation 1</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 1025</div>
+                        <div class="course-name">Programmation 2</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 2035</div>
+                        <div class="course-name lang-fr active">Conc. langages de programm.</div>
+                        <div class="course-name lang-en">Programming Languages Concepts</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 1005</div>
+                        <div class="course-name lang-fr active">Design et développement Web</div>
+                        <div class="course-name lang-en">Web Design & Development</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 3225</div>
+                        <div class="course-name lang-fr active">Technologie de l'Internet</div>
+                        <div class="course-name lang-en">Internet Technology</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3 class="theme-title lang-fr active">🗄️ Bases de données & Structures</h3>
+                <h3 class="theme-title lang-en">🗄️ Databases & Structures</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-code">IFT 2935</div>
+                        <div class="course-name lang-fr active">Bases de données</div>
+                        <div class="course-name lang-en">Databases</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 2015</div>
+                        <div class="course-name lang-fr active">Structures de données</div>
+                        <div class="course-name lang-en">Data Structures</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 1065</div>
+                        <div class="course-name lang-fr active">Struct. discrètes en info</div>
+                        <div class="course-name lang-en">Discrete Structures in CS</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3 class="theme-title lang-fr active">🏗️ Architecture & Systèmes</h3>
+                <h3 class="theme-title lang-en">🏗️ Architecture & Systems</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-code">IFT 1227</div>
+                        <div class="course-name lang-fr active">Architecture des ordinateurs 1</div>
+                        <div class="course-name lang-en">Computer Architecture 1</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 1215</div>
+                        <div class="course-name lang-fr active">Intro aux syst. informatiques</div>
+                        <div class="course-name lang-en">Intro to Computer Systems</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3 class="theme-title lang-fr active">⚙️ Génie Logiciel & Qualité</h3>
+                <h3 class="theme-title lang-en">⚙️ Software Engineering & Quality</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-code">IFT 2255</div>
+                        <div class="course-name lang-fr active">Génie logiciel</div>
+                        <div class="course-name lang-en">Software Engineering</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 3913</div>
+                        <div class="course-name lang-fr active">Qualité logiciel et métriques</div>
+                        <div class="course-name lang-en">Software Quality & Metrics</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3 class="theme-title lang-fr active">🌐 Réseaux & Graphes</h3>
+                <h3 class="theme-title lang-en">🌐 Networks & Graphs</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-code">IFT 3545</div>
+                        <div class="course-name lang-fr active">Graphes et réseaux</div>
+                        <div class="course-name lang-en">Graphs and Networks</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3 class="theme-title lang-fr active">🔬 Théorie & Recherche</h3>
+                <h3 class="theme-title lang-en">🔬 Theory & Research</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-code">IFT 2105</div>
+                        <div class="course-name lang-fr active">Intro à informatique théorique</div>
+                        <div class="course-name lang-en">Intro to Theoretical CS</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 3155</div>
+                        <div class="course-name lang-fr active">Informatique quantique</div>
+                        <div class="course-name lang-en">Quantum Computing</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">IFT 1575</div>
+                        <div class="course-name lang-fr active">Modèles de rech. opérat.</div>
+                        <div class="course-name lang-en">Operations Research Models</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3 class="theme-title lang-fr active">📐 Mathématiques</h3>
+                <h3 class="theme-title lang-en">📐 Mathematics</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-code">MAT 1400</div>
+                        <div class="course-name">Calcul 1</div>
+                        <div class="course-credits">4 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">MAT 1600</div>
+                        <div class="course-name lang-fr active">Algèbre linéaire</div>
+                        <div class="course-name lang-en">Linear Algebra</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">MAT 1978</div>
+                        <div class="course-name lang-fr active">Probabilités et statistique</div>
+                        <div class="course-name lang-en">Probability & Statistics</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-category">
+                <h3 class="theme-title lang-fr active">📊 Économie</h3>
+                <h3 class="theme-title lang-en">📊 Economics</h3>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-code">ECN 1000</div>
+                        <div class="course-name lang-fr active">Principes d'économie</div>
+                        <div class="course-name lang-en">Economics Principles</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-code">ECN 1070</div>
+                        <div class="course-name lang-fr active">Techn. d'analyse économique 1</div>
+                        <div class="course-name lang-en">Economic Analysis Tech. 1</div>
+                        <div class="course-credits">3 crédits</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section>
+            <h2 class="lang-fr active">Compétences</h2>
+            <h2 class="lang-en">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-tag">Java</div>
+                <div class="skill-tag">Python</div>
+                <div class="skill-tag">JavaScript</div>
+                <div class="skill-tag">HTML</div>
+                <div class="skill-tag">CSS</div>
+                <div class="skill-tag">Bootstrap</div>
+                <div class="skill-tag">PHP</div>
+                <div class="skill-tag">SQL</div>
+                <div class="skill-tag">UML</div>
+                <div class="skill-tag">OOP</div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section>
+            <h2 class="lang-fr active">Projets</h2>
+            <h2 class="lang-en">Projects</h2>
+            
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <h3 class="lang-fr active">Script Python - Téléchargement de médias et génération de page HTML</h3>
+                        <h3 class="lang-en">Python Script - Media Download and HTML Page Generation</h3>
+                        <p class="meta">Université de Montréal</p>
+                    </div>
+                </div>
+
+                 <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <h3 class="lang-fr active">Jeu web 'Devine le Mot' </h3>
+                        <h3 class="lang-en">Web game 'guess the word'</h3>
+                        <p class="meta ">Université de Montréal </p>
+                        
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3 class="lang-fr active">Application Java "Ma Ville"</h3>
+                        <h3 class="lang-en">Java Application with API</h3>
+                        <p class="meta lang-fr active">Université de Montréal | Cours Génie Logiciel</p>
+                        <p class="meta lang-en">Université de Montréal | Software Engineering Course</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3 class="lang-fr active">Programme d'allocation de ressources</h3>
+                        <h3 class="lang-en">Resource Allocation Program</h3>
+                        <p class="meta lang-fr active">Université de Montréal | Structure des données</p>
+                        <p class="meta lang-en">Université de Montréal | Data Structures</p>
+                    </div>
+                </div>
+               
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3 class="lang-fr active">Solveur de Sudoku</h3>
+                        <h3 class="lang-en">Sudoku Solver</h3>
+                        <p class="meta lang-fr active">Université de Montréal | Structure des données</p>
+                        <p class="meta lang-en">Université de Montréal | Data Structures</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3 class="lang-fr active">Développement de sites-web en HTML, CSS, JavaScript avec backend</h3>
+                        <h3 class="lang-en">Web Development with HTML, CSS, JavaScript and Backend</h3>
+                        <p class="meta">Concordia University</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3 class="lang-fr active">Jeu Snake and Ladder (Java orienté objet)</h3>
+                        <h3 class="lang-en">Snake and Ladder Game (Object-Oriented Java)</h3>
+                        <p class="meta">Concordia University</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+    <footer>
+        <p class="lang-fr active">© 2026 Marina Traore - Portfolio</p>
+        <p class="lang-en">© 2026 Marina Traore - Portfolio</p>
+    </footer>
+
+    <script>
+        let currentLang = 'fr';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            
+            const frElements = document.querySelectorAll('.lang-fr');
+            const enElements = document.querySelectorAll('.lang-en');
+            
+            if (currentLang === 'fr') {
+                frElements.forEach(el => el.classList.add('active'));
+                enElements.forEach(el => el.classList.remove('active'));
+            } else {
+                frElements.forEach(el => el.classList.remove('active'));
+                enElements.forEach(el => el.classList.add('active'));
+            }
+        }
+    </script>
+</body>
+</html>
